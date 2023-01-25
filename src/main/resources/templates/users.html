@@ -30,6 +30,7 @@
         <tr>
           <th>First Name</th>
           <th>Last Name</th>
+          <th>Age</th>
           <th>EMAIL</th>
           <th>Action</th>
         </tr>
@@ -38,6 +39,7 @@
         <tr th:each="user: ${users}">
           <td th:text="${user.getFirstName()}"/>
           <td th:text="${user.getLastName()}"/>
+          <td th:text="${user.getAge()}"/>
           <td th:text="${user.getEmail()}"/>
           <td>
             <a th:href="@{/admin/edit/{id}(id=${user.id})}"

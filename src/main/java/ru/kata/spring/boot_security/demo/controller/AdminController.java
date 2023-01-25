@@ -9,7 +9,6 @@ import ru.kata.spring.boot_security.demo.service.UserService;
 import java.security.Principal;
 
 @Controller
-@RequestMapping("/admin")
 public class AdminController {
     private final UserService userService;
 
@@ -17,32 +16,31 @@ public class AdminController {
         this.userService = userService;
     }
 
-    @GetMapping(value = "/")
-    public String listUsers(Model model, Principal principal) {
+    @GetMapping(value = "/admin")
+    public String listUsers(Model model) {
         model.addAttribute("users", userService.getUsers());
-        model.addAttribute("principal", principal);
         return "users";
     }
-    @PostMapping("/")
+    @PostMapping("/admin")
     public String addUser(@ModelAttribute("user") User user) {
         userService.addUser(user);
-        return "redirect:/";
+        return "redirect:/admin";
     }
 
-    @GetMapping(value = "/create")
+    @GetMapping(value = "/admin/create")
     public String addUsers(Model model) {
         User user = new User();
         model.addAttribute("user", user);
         return "create_user";
     }
 
-    @GetMapping("/edit/{id}")
+    @GetMapping("/admin/edit/{id}")
     public String editUser(@PathVariable Long id, Model model) {
         model.addAttribute("user", userService.getUser(id));
         return "edit_user";
     }
 
-    @PostMapping("/edit/{id}")
+    @PostMapping("/admin/edit/{id}")
     public String updateUser(@PathVariable Long id,
                              @ModelAttribute("user") User user,
                              Model model) {
@@ -50,7 +48,7 @@ public class AdminController {
         return "redirect:/";
     }
 
-    @GetMapping("/delete/{id}")
+    @GetMapping("/admin/delete/{id}")
     public String deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
         return "redirect:/";

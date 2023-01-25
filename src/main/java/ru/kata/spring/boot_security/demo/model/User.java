@@ -1,15 +1,14 @@
 package ru.kata.spring.boot_security.demo.model;
 
 import jakarta.persistence.*;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import java.io.Serializable;
-import java.util.*;
+import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name ="users")
-public class User implements UserDetails, Serializable {
+public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long user_id;
@@ -18,7 +17,7 @@ public class User implements UserDetails, Serializable {
 
     private String lastName;
 
-    private Integer age;
+    private String age;
 
     @Column(unique = true)
     private String email;
@@ -34,7 +33,7 @@ public class User implements UserDetails, Serializable {
     public User() {
     }
 
-    public User(Long user_id, String firstName, String lastName, String email, Integer age, String password, Set<Role> roles) {
+    public User(Long user_id, String firstName, String lastName, String email, String age, String password, Set<Role> roles) {
         this.user_id = user_id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -52,11 +51,11 @@ public class User implements UserDetails, Serializable {
         this.user_id = user_id;
     }
 
-    public Integer getAge() {
+    public String getAge() {
         return age;
     }
 
-    public void setAge(Integer age) {
+    public void setAge(String age) {
         this.age = age;
     }
 
@@ -84,39 +83,8 @@ public class User implements UserDetails, Serializable {
         this.email = email;
     }
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return getRoles();
-    }
-
-    @Override
     public String getPassword() {
         return password;
-    }
-
-    @Override
-    public String getUsername() {
-        return getEmail();
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
     }
 
     public void setPassword(String password) {
